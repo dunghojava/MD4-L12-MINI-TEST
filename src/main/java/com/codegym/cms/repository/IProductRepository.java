@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IProductRepository extends PagingAndSortingRepository<Product, Long> {
+    Iterable<Product> findAllByName(String name);
+    Iterable<Product> findAllByPriceBetween(int from, int to);
 }
