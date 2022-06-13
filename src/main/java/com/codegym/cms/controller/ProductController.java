@@ -26,6 +26,23 @@ public class ProductController {
         }
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<Product>> findAllByName(@RequestParam("name") String name) {
+        List<Product> products = (List<Product>) productService.findByName(name);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/name")
+    public ResponseEntity<Iterable<Product>> findByNameContaining(@RequestParam("name") String name) {
+        List<Product> products = (List<Product>) productService.findByNameContaining(name);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/price/between")
+    public ResponseEntity<Iterable<Product>> findAllPriceBetween(@RequestParam("price") int from, int to) {
+        List<Product> products = (List<Product>) productService.findAllByPriceBetween(from, to);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {

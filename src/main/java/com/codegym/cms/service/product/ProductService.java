@@ -35,7 +35,17 @@ public class ProductService implements IProductService{
 
 
     @Override
-    public Iterable<Product> findByName(Product product) {
-        return null;
+    public Iterable<Product> findByName(String name) {
+        return productRepository.findAllByName(name);
+    }
+
+    @Override
+    public Iterable<Product> findByNameContaining(String name) {
+        return productRepository.findAllByNameContaining(name);
+    }
+
+    @Override
+    public Iterable<Product> findAllByPriceBetween(int from, int to) {
+        return productRepository.findAllByPriceBetween(from, to);
     }
 }
