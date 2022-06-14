@@ -20,7 +20,10 @@ public interface IProductRepository extends PagingAndSortingRepository<Product, 
     @Query(value = "select * from Products p order by p.price asc", nativeQuery = true)
     Iterable<Product> showListAsc();
 
-    @Query(value = "select * from products p order by p.id desc LIMIT 4", nativeQuery = true)
+    @Query(value = "select * from products p\n" +
+            "where p.name is not null\n" +
+            "and p.price <> 6000\n" +
+            "order by p.id desc", nativeQuery = true)
     Iterable<Product> showNewList();
 
 }

@@ -75,6 +75,9 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> saveProduct(@RequestBody Product product) {
+        if (product.getId() == null || product.getCategory() == null || product.getName() == null || product.getPrice() == 0) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
     }
 
