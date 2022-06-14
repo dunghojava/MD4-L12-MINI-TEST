@@ -22,7 +22,7 @@ public interface IProductRepository extends PagingAndSortingRepository<Product, 
 
     @Query(value = "select * from products p\n" +
             "where p.name is not null\n" +
-            "and p.price <> 6000\n" +
+            "and p.price <> 0\n" +
             "order by p.id desc", nativeQuery = true)
     Iterable<Product> showNewList();
 
