@@ -20,11 +20,29 @@ public class ProductController {
     @Autowired
     private IProductService productService;
     @Autowired
-   private ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<Iterable<Product>> findAllProduct() {
         List<Product> products = (List<Product>) productService.findAll();
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/showPriceAsc")
+    public ResponseEntity<Iterable<Product>> findAllProductAsc() {
+        List<Product> products = (List<Product>) productService.showListAsc();
+        if (products.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/showNewList")
+    public ResponseEntity<Iterable<Product>> showNewList() {
+        List<Product> products = (List<Product>) productService.showNewList();
         if (products.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -44,10 +62,11 @@ public class ProductController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Iterable<Product>> findAllPriceBetween(@RequestParam("from") Long from,@RequestParam("to") Long to) {
+    public ResponseEntity<Iterable<Product>> findAllPriceBetween(@RequestParam("from") Long from, @RequestParam("to") Long to) {
         List<Product> products = (List<Product>) productService.findAllByPriceBetween(from, to);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
     @GetMapping("/findByCategory")
     public ResponseEntity<Iterable<Product>> findAllByCategory(@RequestParam Long id) {
         List<Product> products = (List<Product>) productService.findAllByCategory((Category) categoryService.findById(id).get());

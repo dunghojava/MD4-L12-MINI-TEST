@@ -11,5 +11,10 @@ public interface IProductService extends IGeneralService<Product> {
     Iterable<Product> findByNameContaining(String name);
 
     Iterable<Product> findAllByPriceBetween(Long from, Long to);
+
     Iterable<Product> findAllByCategory(Category category);
+
+    Iterable<Product> showListAsc();
+
+    Iterable<Product> showNewList();
 }

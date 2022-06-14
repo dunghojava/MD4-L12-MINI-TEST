@@ -54,4 +54,16 @@ public class ProductService implements IProductService{
     public Iterable<Product> findAllByCategory(Category category) {
         return productRepository.findAllByCategory(category);
     }
+
+    @Override
+    public Iterable<Product> showListAsc() {
+        return productRepository.showListAsc();
+    }
+
+    @Override
+    public Iterable<Product> showNewList() {
+        return productRepository.showNewList();
+    }
+
+
 }
