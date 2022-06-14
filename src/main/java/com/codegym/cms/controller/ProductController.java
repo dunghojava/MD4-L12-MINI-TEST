@@ -1,7 +1,9 @@
 package com.codegym.cms.controller;
 
 
+import com.codegym.cms.model.Category;
 import com.codegym.cms.model.Product;
+import com.codegym.cms.service.category.ICategoryService;
 import com.codegym.cms.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,8 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
+    @Autowired
+   private ICategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<Iterable<Product>> findAllProduct() {
@@ -26,6 +30,7 @@ public class ProductController {
         }
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+
     @GetMapping("/search")
     public ResponseEntity<Iterable<Product>> findAllByName(@RequestParam("name") String name) {
         List<Product> products = (List<Product>) productService.findByName(name);
@@ -38,9 +43,14 @@ public class ProductController {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-    @GetMapping("/search/price/between")
-    public ResponseEntity<Iterable<Product>> findAllPriceBetween(@RequestParam("price") int from, int to) {
+    @GetMapping("/find")
+    public ResponseEntity<Iterable<Product>> findAllPriceBetween(@RequestParam("from") Long from,@RequestParam("to") Long to) {
         List<Product> products = (List<Product>) productService.findAllByPriceBetween(from, to);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+    @GetMapping("/findByCategory")
+    public ResponseEntity<Iterable<Product>> findAllByCategory(@RequestParam Long id) {
+        List<Product> products = (List<Product>) productService.findAllByCategory((Category) categoryService.findById(id).get());
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
